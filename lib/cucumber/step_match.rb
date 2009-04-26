@@ -3,14 +3,14 @@ module Cucumber
     attr_reader :step_definition
     attr_reader :args
     
-    def initialize(step_definition, step_name, formatted_step_name, args)
-      @step_definition, @step_name, @formatted_step_name, @args = step_definition, step_name, formatted_step_name, args
+    def initialize(step_definition, step_name, formatted_step_name, args, is_negative)
+      @step_definition, @step_name, @formatted_step_name, @args, @is_negative = step_definition, step_name, formatted_step_name, args, is_negative
     end
     
     def invoke(world, multiline_arg)
       all_args = @args.dup
       all_args << multiline_arg if multiline_arg
-      @step_definition.invoke(world, all_args)
+      @step_definition.invoke(world, all_args, @is_negative)
     end
 
     def format_args(format = lambda{|a| a})
